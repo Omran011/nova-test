@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تحليلات وتقارير - NovaShop</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      direction: rtl;
+      padding: 20px;
+      background-color: #f0f4f8;
+      color: #333;
+    }
+    h1 {
+      color: #007bff;
+      text-align: center;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0 40px;
+    }
+    .card {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 200px;
+    }
+    .card h2 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #007bff;
+    }
+    .card p {
+      margin: 5px 0 0;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    table {
+      width: 90%;
+      max-width: 700px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    tr:hover {
+      background-color: #e7f0ff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>تحليلات وتقارير متجر NovaShop</h1>
+
+  <div class="stats">
+    <div class="card">
+      <h2 id="totalProducts">0</h2>
+      <p>عدد المنتجات</p>
+    </div>
+    <div class="card">
+      <h2 id="totalSales">$0</h2>
+      <p>إجمالي السعر (مبيعات محتملة)</p>
+    </div>
+    <div class="card">
+      <h2 id="averagePrice">$0</h2>
+      <p>متوسط سعر المنتج</p>
+    </div>
+  </div>
+
+  <h2 style="text-align:center; margin-bottom: 15px;">المنتجات الأكثر مبيعًا (محاكاة)</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>اسم المنتج</th>
+        <th>عدد المبيعات</th>
+        <th>الإيرادات</th>
+      </tr>
+    </thead>
+    <tbody id="salesTableBody">
+      <!-- سيتم تعبئته بالبيانات -->
+    </tbody>
+  </table>
+
+<script>
+  // بيانات المنتجات (يمكن جلبها من الباك اند في مشاريع حقيقية)
+  const products = [
+    { name: 'كاميرا رقمية', price: 150, sales: 20 },
+    { name: 'سماعة لاسلكية', price: 80, sales: 35 },
+    { name: 'ساعة ذكية', price: 120, sales: 15 },
+    { name: 'هاتف ذكي', price: 400, sales: 8 },
+    { name: 'حاسوب محمول', price: 700, sales: 5 },
+  ];
+
+  // تحديث الإحصائيات
+  function updateStats() {
+    const totalProducts = products.length;
+    const totalSales = products.reduce((sum, p) => sum + p.price * p.sales, 0);
+    const averagePrice = products.reduce((sum, p) => sum + p.price, 0) / totalProducts;
+
+    document.getElementById('totalProducts').textContent = totalProducts;
+    document.getElementById('totalSales').textContent = `$${totalSales.toFixed(2)}`;
+    document.getElementById('averagePrice').textContent = `$${averagePrice.toFixed(2)}`;
+  }
+
+  // تعبئة جدول المبيعات
+  function populateSalesTable() {
+    const tbody = document.getElementById('salesTableBody');
+    tbody.innerHTML = '';
+    products.forEach(p => {
+      const tr = document.createElement('tr');
+      const revenue = p.price * p.sales;
+      tr.innerHTML = `
+        <td>${p.name}</td>
+        <td>${p.sales}</td>
+        <td>$${revenue.toFixed(2)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  updateStats();
+  populateSalesTable();
+</script>
+
+</body>
+</html>
